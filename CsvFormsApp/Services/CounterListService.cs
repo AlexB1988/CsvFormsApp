@@ -12,9 +12,8 @@ namespace CsvFormsApp.Services
     {
         DataContext _dataContext;
 
-        public CounterListService(DataContext dataContext)
+        public CounterListService()
         {
-            _dataContext = dataContext;
         }
         public async Task GetObjectList(string path, int period, string connectionString)
         {
