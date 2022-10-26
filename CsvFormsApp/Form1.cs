@@ -1,4 +1,10 @@
+using CsvFormsApp.Domain.Entities;
 using CsvFormsApp.Services;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 
 namespace CsvFormsApp
 {
@@ -35,16 +41,16 @@ namespace CsvFormsApp
         private void loadFile_Click(object sender, EventArgs e)
         {
             CounterListService _objectList = new CounterListService();
-            string path=filePathBox.Text;
+            string path = filePathBox.Text;
             string server = serverBox.Text;
             string login = loginBox.Text;
-            string psw=pswBox.Text;
-            string dataBase=dataBaseBox.Text;
+            string psw = pswBox.Text;
+            string dataBase = dataBaseBox.Text;
             int period = int.Parse(periodBox.Text);
-            string connectionString= $"Server={server};User={login};Password={psw};Database={dataBase};TrustServerCertificate=true;";
-            _objectList.GetObjectList(path,period,connectionString);
-        }
+            string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase};TrustServerCertificate=true;";
+            _objectList.GetObjectList(path, period, connectionString);
 
+        }
         private void loginBox_TextChanged(object sender, EventArgs e)
         {
 

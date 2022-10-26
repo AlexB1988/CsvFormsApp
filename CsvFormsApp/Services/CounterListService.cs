@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CsvFormsApp.Services
 {
-    public class CounterListService : IObjectService
+    public class CounterListService //: IObjectService
     {
         DataContext _dataContext;
 
@@ -17,16 +17,11 @@ namespace CsvFormsApp.Services
         }
         public async Task GetObjectList(string path, int period, string connectionString)
         {
-            //string path = $"Files/{file.FileName}";
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             List<Counters> counters = new List<Counters>();
             List<List> countersList = new List<List>();
             List<Flow> countersFlow = new List<Flow>();
-            //using (var fileStreem = new FileStream(path, FileMode.Create))
-            //{
-            //    await file.CopyToAsync(fileStreem);
-            //}
-
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using (StreamReader sr = new StreamReader(path, Encoding.GetEncoding("windows-1251")))
             {
                 var csvConfig = new CsvConfiguration(CultureInfo.GetCultureInfo("ru-RU"))
