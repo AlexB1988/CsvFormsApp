@@ -8,7 +8,12 @@ namespace CsvFormsApp
         {
             InitializeComponent();
             broweButton.Click += broweButton_Click;
-            loadFile.Click+=loadFile_Click;
+            serverBox.TextChanged += serverBox_TextChanged;
+            loginBox.TextChanged += loginBox_TextChanged;
+            pswBox.TextChanged += pswBox_TextChanged;
+            dataBaseBox.TextChanged += dataBaseBox_TextChanged;
+            periodBox.TextChanged += perioBox_TextChanged;
+            loadFile.Click += loadFile_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -27,15 +32,11 @@ namespace CsvFormsApp
         {
             
         }
-        private void severBox_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
         private void loadFile_Click(object sender, EventArgs e)
         {
             CounterListService _objectList = new CounterListService();
             string path=filePathBox.Text;
-            string server = severBox.Text;
+            string server = serverBox.Text;
             string login = loginBox.Text;
             string psw=pswBox.Text;
             string dataBase=dataBaseBox.Text;
@@ -59,7 +60,18 @@ namespace CsvFormsApp
 
         }
 
+
+        private void serverBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void perioBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void periodBox_TextChanged(object sender, EventArgs e)
         {
 
         }
