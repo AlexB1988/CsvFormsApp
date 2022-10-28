@@ -42,7 +42,6 @@
             this.periodLabel = new System.Windows.Forms.Label();
             this.serverBox = new System.Windows.Forms.TextBox();
             this.periodBox = new System.Windows.Forms.TextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -165,19 +164,11 @@
             this.periodBox.TabIndex = 14;
             this.periodBox.TextChanged += new System.EventHandler(this.periodBox_TextChanged);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(39, 7);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(544, 23);
-            this.progressBar1.TabIndex = 15;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 328);
-            this.Controls.Add(this.progressBar1);
+            this.ClientSize = new System.Drawing.Size(628, 333);
             this.Controls.Add(this.periodBox);
             this.Controls.Add(this.serverBox);
             this.Controls.Add(this.periodLabel);
@@ -216,6 +207,5 @@
         private Label periodLabel;
         private TextBox serverBox;
         private TextBox periodBox;
-        private ProgressBar progressBar1;
     }
 }
