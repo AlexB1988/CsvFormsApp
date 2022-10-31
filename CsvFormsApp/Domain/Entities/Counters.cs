@@ -21,6 +21,7 @@
         public string? AccountID { get; set; }
         public string? CounterID { get; set; }
         public string? FlatName { get; set; }
+        public string? FlatBookID { get; set; }
         public string? HouseID { get; set; }
         public string? Value { get; set; }
         public string? PrevDate { get; set; }

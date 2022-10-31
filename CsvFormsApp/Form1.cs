@@ -49,9 +49,11 @@ namespace CsvFormsApp
             int period = int.Parse(periodBox.Text);
             string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase};TrustServerCertificate=true;";
             Form2 form2 = new Form2();
-            form2.Show();
-            this.Enabled = false;
+            form2.ShowDialog();
+            //this.Enabled = false;
             _objectList.GetObjectList(path, period, connectionString);
+            //form2.ShowDialog();
+            //this.Enabled = true;
         }
         private void loginBox_TextChanged(object sender, EventArgs e)
         {

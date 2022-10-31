@@ -10,7 +10,7 @@ namespace CsvFormsApp.Services
 {
     public class CounterListService //: IObjectService
     {
-        DataContext _dataContext;
+        //DataContext _dataContext;
 
         public CounterListService()
         {
@@ -56,9 +56,6 @@ namespace CsvFormsApp.Services
                         };
                         countersList.Add(counterListEnd);
                     }
-                    //await _dataContext.Lists.AddRangeAsync(countersList);
-                    //await _dataContext.SaveChangesAsync(); // Нельзя убрать, т.к. в дальнейшем ID из этой таблицы будет привязан к Account
-
                 }
                 var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
                 var options = optionsBuilder.UseSqlServer(connectionString).Options;
@@ -70,18 +67,19 @@ namespace CsvFormsApp.Services
                     foreach (var counter in counters)
                     {
                         var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
-                        //var account = dataContext.Owners.FirstOrDefault(u => u.AccountName == counter.AccountName);
-                        //Console.WriteLine(account.AccountName);
                         if (list != null)
                         {
                             counter.CounterID = list.Id.ToString();
-                            //counter.AccountID = account.AccountId.ToString();
-                            //var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
                             var account = dataContext.Owners.FirstOrDefault(u => u.AccountName == counter.AccountName);
+                            if (account == null)
+                            {
+                                account = dataContext.Owners.FirstOrDefault(u => u.FlatBookId.ToString() == counter.FlatBookID &&
+                                                                             u.FlatName == counter.FlatName &&
+                                                                             u.HouseId.ToString()==counter.HouseID);
+                            }
                             if (account != null)
                             {
                                 Console.WriteLine(account.AccountName);
-                                //counter.CounterID = list.Id.ToString();
                                 counter.AccountID = account.AccountId.ToString();
                                 var counterAccount = new Account()
                                 {
@@ -115,9 +113,6 @@ namespace CsvFormsApp.Services
                             }
                         }
                     }
-
-                    //await _dataContext.Counters.AddRangeAsync(counters);
-                    //await _dataContext.CountersLIst.AddRangeAsync(countersLIst)
                     await dataContext.SaveChangesAsync();
                 }
             }
