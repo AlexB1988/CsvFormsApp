@@ -8,10 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CsvFormsApp.Services
 {
-    public class CounterListService //: IObjectService
+    public class CounterListService : IObjectService
     {
-        //DataContext _dataContext;
-
         public CounterListService()
         {
         }
@@ -58,16 +56,18 @@ namespace CsvFormsApp.Services
                         };
                         countersList.Add(counterListEnd);
                     }
-                    using (DataContext dataContext = new DataContext(options))
-                    {
-                        await dataContext.Lists.AddRangeAsync(countersList);
-                        await dataContext.SaveChangesAsync();
-                    }
+                    //using (DataContext dataContext = new DataContext(options))
+                    //{
+                    //    await dataContext.Lists.AddRangeAsync(countersList);
+                    //    await dataContext.SaveChangesAsync();
+                    //}
                 }
             }
 
             using (DataContext dataContext = new DataContext(options))
-            {         
+            {
+                await dataContext.Lists.AddRangeAsync(countersList);
+                await dataContext.SaveChangesAsync();
                 foreach (var counter in counters)
                 {
                     var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
@@ -101,8 +101,6 @@ namespace CsvFormsApp.Services
                                     PrevDate = DateTime.Parse(counter.PrevDate),
                                     PrevValue = decimal.Parse(counter.PrevValue),
                                     Rate = decimal.Parse(counter.Rate),
-                                    Value=null,
-                                    Date=null,
                                     FlowTypeId = 0
                                 };
                             }
