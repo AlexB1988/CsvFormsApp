@@ -42,9 +42,10 @@ namespace CsvFormsApp
             string psw = pswBox.Text;
             string dataBase = dataBaseBox.Text;
             int period = int.Parse(periodBox.Text);
+            bool currentFlow = checkBoxCurrentFlow.Checked;
             string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                         $";TrustServerCertificate=true;";
-            _objectList.GetObjectList(path, period, connectionString);
+            _objectList.GetObjectList(path, period, connectionString,currentFlow);
             form2.Hide();
             MessageBox.Show(
                 "Данные успешно загружены!",
@@ -81,6 +82,11 @@ namespace CsvFormsApp
         }
 
         private void periodBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxCurrentFlow_CheckedChanged(object sender, EventArgs e)
         {
 
         }

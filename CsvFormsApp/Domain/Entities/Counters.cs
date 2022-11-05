@@ -23,7 +23,9 @@
         public string? FlatName { get; set; }
         public string? FlatBookID { get; set; }
         public string? HouseID { get; set; }
-        public string? Value { get; set; }
+        public string? PrevValue { get; set; }
         public string? PrevDate { get; set; }
+        public string? Value { get; set; }
+        public string? Date { get; set; } 
     }
 }

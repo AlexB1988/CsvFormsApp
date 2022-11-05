@@ -15,7 +15,7 @@ namespace CsvFormsApp.Services
         public CounterListService()
         {
         }
-        public async Task GetObjectList(string path, int period, string connectionString)
+        public async Task GetObjectList(string path, int period, string connectionString,bool currentFlow)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
             var options = optionsBuilder.UseSqlServer(connectionString).Options;
@@ -52,20 +52,22 @@ namespace CsvFormsApp.Services
                             VerificationDate = DateTime.TryParse(record.VerificationDate, out var verificationDateResult) ? (verificationDateResult) : (null),
                             StampNumber = record.StampNumber,
                             AntiMagnetStampNumber = record.AntiMagnetStampNumber,
-                            VerificationInterval = int.TryParse(record.DateBegin, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
+                            VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
                             MarkId = int.TryParse(record.MarkID, out var markIDResult) ? (markIDResult) : (null),
                             Model = record.Model,
                         };
                         countersList.Add(counterListEnd);
                     }
+                    using (DataContext dataContext = new DataContext(options))
+                    {
+                        await dataContext.Lists.AddRangeAsync(countersList);
+                        await dataContext.SaveChangesAsync();
+                    }
                 }
             }
 
             using (DataContext dataContext = new DataContext(options))
-            {
-                await dataContext.Lists.AddRangeAsync(countersList);
-                await dataContext.SaveChangesAsync();
-
+            {         
                 foreach (var counter in counters)
                 {
                     var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
@@ -88,23 +90,42 @@ namespace CsvFormsApp.Services
                                 AccountId = int.Parse(counter.AccountID),
                                 CounterId = int.Parse(counter.CounterID)
                             };
-                            var counterFlowTillEnd = new Flow()
+                            Flow counterFlowTillEnd;
+                            if (currentFlow is not true)
                             {
-                                CounterId = int.Parse(counter.CounterID),
-                                PeriodId = period,
-                                SubListId = int.Parse(counter.SublistID),
-                                PrevDate = DateTime.Parse(counter.PrevDate),
-                                PrevValue = decimal.Parse(counter.Value),
-                                Rate = decimal.Parse(counter.Rate),
-                                FlowTypeId = 0
-                            };
+                                counterFlowTillEnd = new Flow()
+                                {
+                                    CounterId = int.Parse(counter.CounterID),
+                                    PeriodId = period,
+                                    SubListId = int.Parse(counter.SublistID),
+                                    PrevDate = DateTime.Parse(counter.PrevDate),
+                                    PrevValue = decimal.Parse(counter.PrevValue),
+                                    Rate = decimal.Parse(counter.Rate),
+                                    FlowTypeId = 0
+                                };
+                            }
+                            else
+                            {
+                                counterFlowTillEnd = new Flow()
+                                {
+                                    CounterId = int.Parse(counter.CounterID),
+                                    PeriodId = period,
+                                    SubListId = int.Parse(counter.SublistID),
+                                    PrevDate = DateTime.Parse(counter.PrevDate),
+                                    PrevValue = decimal.Parse(counter.PrevValue),
+                                    Date = DateTime.Parse(counter.Date),
+                                    Value = decimal.Parse(counter.Value),
+                                    Rate = decimal.Parse(counter.Rate),
+                                    FlowTypeId = 1
+                                };
+                            }
                             var counterFlowEnd = new Flow()
                             {
                                 CounterId = int.Parse(counter.CounterID),
                                 PeriodId = period - 1,
                                 SubListId = int.Parse(counter.SublistID),
-                                PrevValue = decimal.Parse(counter.Value),
-                                Value = decimal.Parse(counter.Value),
+                                PrevValue = decimal.Parse(counter.PrevValue),
+                                Value = decimal.Parse(counter.PrevValue),
                                 PrevDate = DateTime.Parse(counter.PrevDate),
                                 Rate = decimal.Parse(counter.Rate),
                                 FlowTypeId = 5
@@ -117,7 +138,8 @@ namespace CsvFormsApp.Services
                 }
                 await dataContext.SaveChangesAsync();
             }
-            
+            counters.Clear();
+            countersList.Clear();
         }
     }
 }
