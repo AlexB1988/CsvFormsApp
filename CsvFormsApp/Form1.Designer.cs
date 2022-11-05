@@ -42,6 +42,10 @@
             this.periodLabel = new System.Windows.Forms.Label();
             this.serverBox = new System.Windows.Forms.TextBox();
             this.periodBox = new System.Windows.Forms.TextBox();
+            this.flowGroupBox = new System.Windows.Forms.GroupBox();
+            this.withFlowRadioButton = new System.Windows.Forms.RadioButton();
+            this.nonFlowRadioButton = new System.Windows.Forms.RadioButton();
+            this.flowGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -164,11 +168,45 @@
             this.periodBox.TabIndex = 14;
             this.periodBox.TextChanged += new System.EventHandler(this.periodBox_TextChanged);
             // 
+            // flowGroupBox
+            // 
+            this.flowGroupBox.Controls.Add(this.nonFlowRadioButton);
+            this.flowGroupBox.Controls.Add(this.withFlowRadioButton);
+            this.flowGroupBox.Location = new System.Drawing.Point(368, 36);
+            this.flowGroupBox.Name = "flowGroupBox";
+            this.flowGroupBox.Size = new System.Drawing.Size(200, 100);
+            this.flowGroupBox.TabIndex = 15;
+            this.flowGroupBox.TabStop = false;
+            this.flowGroupBox.Text = "Наличие текущих показаний:";
+            // 
+            // withFlowRadioButton
+            // 
+            this.withFlowRadioButton.AutoSize = true;
+            this.withFlowRadioButton.Location = new System.Drawing.Point(15, 29);
+            this.withFlowRadioButton.Name = "withFlowRadioButton";
+            this.withFlowRadioButton.Size = new System.Drawing.Size(169, 19);
+            this.withFlowRadioButton.TabIndex = 0;
+            this.withFlowRadioButton.TabStop = true;
+            this.withFlowRadioButton.Text = "С текущими показаниями";
+            this.withFlowRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // nonFlowRadioButton
+            // 
+            this.nonFlowRadioButton.AutoSize = true;
+            this.nonFlowRadioButton.Location = new System.Drawing.Point(16, 54);
+            this.nonFlowRadioButton.Name = "nonFlowRadioButton";
+            this.nonFlowRadioButton.Size = new System.Drawing.Size(94, 19);
+            this.nonFlowRadioButton.TabIndex = 1;
+            this.nonFlowRadioButton.TabStop = true;
+            this.nonFlowRadioButton.Text = "radioButton2";
+            this.nonFlowRadioButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 333);
+            this.Controls.Add(this.flowGroupBox);
             this.Controls.Add(this.periodBox);
             this.Controls.Add(this.serverBox);
             this.Controls.Add(this.periodLabel);
@@ -186,6 +224,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CsvMaker";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.flowGroupBox.ResumeLayout(false);
+            this.flowGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +247,8 @@
         private Label periodLabel;
         private TextBox serverBox;
         private TextBox periodBox;
+        private GroupBox flowGroupBox;
+        private RadioButton nonFlowRadioButton;
+        private RadioButton withFlowRadioButton;
     }
 }

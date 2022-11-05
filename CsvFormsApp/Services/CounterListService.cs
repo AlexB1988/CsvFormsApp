@@ -17,10 +17,12 @@ namespace CsvFormsApp.Services
         }
         public async Task GetObjectList(string path, int period, string connectionString)
         {
+            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+            var options = optionsBuilder.UseSqlServer(connectionString).Options;
 
             List<Counters> counters = new List<Counters>();
             List<List> countersList = new List<List>();
-            List<Flow> countersFlow = new List<Flow>();
+            //List<Flow> countersFlow = new List<Flow>();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using (StreamReader sr = new StreamReader(path, Encoding.GetEncoding("windows-1251")))
             {
@@ -57,65 +59,65 @@ namespace CsvFormsApp.Services
                         countersList.Add(counterListEnd);
                     }
                 }
-                var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-                var options = optionsBuilder.UseSqlServer(connectionString).Options;
-                using (DataContext dataContext = new DataContext(options))
-                {
-                    await dataContext.Lists.AddRangeAsync(countersList);
-                    await dataContext.SaveChangesAsync();
+            }
 
-                    foreach (var counter in counters)
+            using (DataContext dataContext = new DataContext(options))
+            {
+                await dataContext.Lists.AddRangeAsync(countersList);
+                await dataContext.SaveChangesAsync();
+
+                foreach (var counter in counters)
+                {
+                    var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
+                    if (list != null)
                     {
-                        var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
-                        if (list != null)
+                        counter.CounterID = list.Id.ToString();
+                        var account = dataContext.Owners.FirstOrDefault(u => u.AccountName == counter.AccountName);
+                        if (account == null)
                         {
-                            counter.CounterID = list.Id.ToString();
-                            var account = dataContext.Owners.FirstOrDefault(u => u.AccountName == counter.AccountName);
-                            if (account == null)
+                            account = dataContext.Owners.FirstOrDefault(u => u.FlatBookId.ToString() == counter.FlatBookID &&
+                                                                         u.FlatName == counter.FlatName &&
+                                                                         u.HouseId.ToString()==counter.HouseID);
+                        }
+                        if (account != null)
+                        {
+                            Console.WriteLine(account.AccountName);
+                            counter.AccountID = account.AccountId.ToString();
+                            var counterAccount = new Account()
                             {
-                                account = dataContext.Owners.FirstOrDefault(u => u.FlatBookId.ToString() == counter.FlatBookID &&
-                                                                             u.FlatName == counter.FlatName &&
-                                                                             u.HouseId.ToString()==counter.HouseID);
-                            }
-                            if (account != null)
+                                AccountId = int.Parse(counter.AccountID),
+                                CounterId = int.Parse(counter.CounterID)
+                            };
+                            var counterFlowTillEnd = new Flow()
                             {
-                                Console.WriteLine(account.AccountName);
-                                counter.AccountID = account.AccountId.ToString();
-                                var counterAccount = new Account()
-                                {
-                                    AccountId = int.Parse(counter.AccountID),
-                                    CounterId = int.Parse(counter.CounterID)
-                                };
-                                var counterFlowTillEnd = new Flow()
-                                {
-                                    CounterId = int.Parse(counter.CounterID),
-                                    PeriodId = period,
-                                    SubListId = int.Parse(counter.SublistID),
-                                    PrevDate = DateTime.Parse(counter.PrevDate),
-                                    PrevValue = decimal.Parse(counter.Value),
-                                    Rate = decimal.Parse(counter.Rate),
-                                    FlowTypeId = 0
-                                };
-                                var counterFlowEnd = new Flow()
-                                {
-                                    CounterId = int.Parse(counter.CounterID),
-                                    PeriodId = period - 1,
-                                    SubListId = int.Parse(counter.SublistID),
-                                    PrevValue = decimal.Parse(counter.Value),
-                                    Value = decimal.Parse(counter.Value),
-                                    PrevDate = DateTime.Parse(counter.PrevDate),
-                                    Rate = decimal.Parse(counter.Rate),
-                                    FlowTypeId = 5
-                                };
-                                await dataContext.Accounts.AddAsync(counterAccount);
-                                await dataContext.Flows.AddAsync(counterFlowTillEnd);
-                                await dataContext.Flows.AddAsync(counterFlowEnd);
-                            }
+                                CounterId = int.Parse(counter.CounterID),
+                                PeriodId = period,
+                                SubListId = int.Parse(counter.SublistID),
+                                PrevDate = DateTime.Parse(counter.PrevDate),
+                                PrevValue = decimal.Parse(counter.Value),
+                                Rate = decimal.Parse(counter.Rate),
+                                FlowTypeId = 0
+                            };
+                            var counterFlowEnd = new Flow()
+                            {
+                                CounterId = int.Parse(counter.CounterID),
+                                PeriodId = period - 1,
+                                SubListId = int.Parse(counter.SublistID),
+                                PrevValue = decimal.Parse(counter.Value),
+                                Value = decimal.Parse(counter.Value),
+                                PrevDate = DateTime.Parse(counter.PrevDate),
+                                Rate = decimal.Parse(counter.Rate),
+                                FlowTypeId = 5
+                            };
+                            await dataContext.Accounts.AddAsync(counterAccount);
+                            await dataContext.Flows.AddAsync(counterFlowTillEnd);
+                            await dataContext.Flows.AddAsync(counterFlowEnd);
                         }
                     }
-                    await dataContext.SaveChangesAsync();
                 }
+                await dataContext.SaveChangesAsync();
             }
+            
         }
     }
 }

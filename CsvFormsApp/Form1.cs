@@ -13,13 +13,6 @@ namespace CsvFormsApp
         public Form1()
         {
             InitializeComponent();
-            broweButton.Click += broweButton_Click;
-            serverBox.TextChanged += serverBox_TextChanged;
-            loginBox.TextChanged += loginBox_TextChanged;
-            pswBox.TextChanged += pswBox_TextChanged;
-            dataBaseBox.TextChanged += dataBaseBox_TextChanged;
-            periodBox.TextChanged += perioBox_TextChanged;
-            loadFile.Click += loadFile_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -49,12 +42,17 @@ namespace CsvFormsApp
             string psw = pswBox.Text;
             string dataBase = dataBaseBox.Text;
             int period = int.Parse(periodBox.Text);
-            string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase};TrustServerCertificate=true;";
-            this.Enabled = false;
+            string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
+                                        $";TrustServerCertificate=true;";
             _objectList.GetObjectList(path, period, connectionString);
-            //form2.ShowDialog();
-            //form2.Hide();
-            this.Enabled = true;
+            form2.Hide();
+            MessageBox.Show(
+                "Данные успешно загружены!",
+                "Message",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
         }
         private void loginBox_TextChanged(object sender, EventArgs e)
         {
