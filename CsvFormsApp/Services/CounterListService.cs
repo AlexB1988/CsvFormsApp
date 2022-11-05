@@ -101,6 +101,8 @@ namespace CsvFormsApp.Services
                                     PrevDate = DateTime.Parse(counter.PrevDate),
                                     PrevValue = decimal.Parse(counter.PrevValue),
                                     Rate = decimal.Parse(counter.Rate),
+                                    Value=null,
+                                    Date=null,
                                     FlowTypeId = 0
                                 };
                             }
@@ -137,9 +139,9 @@ namespace CsvFormsApp.Services
                     }
                 }
                 await dataContext.SaveChangesAsync();
+                counters.Clear();
+                countersList.Clear();
             }
-            counters.Clear();
-            countersList.Clear();
         }
     }
 }

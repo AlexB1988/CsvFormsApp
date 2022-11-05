@@ -45,7 +45,7 @@ namespace CsvFormsApp
             bool currentFlow = checkBoxCurrentFlow.Checked;
             string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                         $";TrustServerCertificate=true;";
-            _objectList.GetObjectList(path, period, connectionString,currentFlow);
+            _objectList.GetObjectList(path, period, connectionString, currentFlow);
             form2.Hide();
             MessageBox.Show(
                 "Данные успешно загружены!",
