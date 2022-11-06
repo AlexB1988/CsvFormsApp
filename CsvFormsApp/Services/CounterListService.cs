@@ -56,18 +56,18 @@ namespace CsvFormsApp.Services
                         };
                         countersList.Add(counterListEnd);
                     }
-                    //using (DataContext dataContext = new DataContext(options))
-                    //{
-                    //    await dataContext.Lists.AddRangeAsync(countersList);
-                    //    await dataContext.SaveChangesAsync();
-                    //}
+                    using (DataContext dataContext = new DataContext(options))
+                    {
+                        await dataContext.Lists.AddRangeAsync(countersList);
+                        await dataContext.SaveChangesAsync();
+                    }
                 }
             }
 
             using (DataContext dataContext = new DataContext(options))
             {
-                await dataContext.Lists.AddRangeAsync(countersList);
-                await dataContext.SaveChangesAsync();
+                //await dataContext.Lists.AddRangeAsync(countersList);
+                //await dataContext.SaveChangesAsync();
                 foreach (var counter in counters)
                 {
                     var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
