@@ -42,6 +42,7 @@
             this.serverBox = new System.Windows.Forms.TextBox();
             this.periodBox = new System.Windows.Forms.TextBox();
             this.checkBoxCurrentFlow = new System.Windows.Forms.CheckBox();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.SuspendLayout();
             // 
             // openFileDialog
