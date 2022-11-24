@@ -10,6 +10,7 @@
         public string? InstallationDate { get; set; }
         public string? DateBegin { get; set; }
         public string? UnitID { get; set; }
+        public string? Mark { get; set; }
         public string? MarkID { get; set; }
         public string? Model { get; set; }
         public string? VerificationDate { get; set; }

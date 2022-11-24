@@ -38,32 +38,53 @@ namespace CsvFormsApp.Services
                     using (var csvReader = new CsvReader(sr, csvConfig))
                     {
                         var records = csvReader.GetRecords<Counters>();
-                        foreach (var record in records)
-                        {
-                            counters.Add(record);
-                            var counterListEnd = new List()
-                            {
-                                DateBegin = DateTime.Parse(record.DateBegin),
-                                SubListId = int.Parse(record.SublistID),
-                                Number = short.Parse(record.Number),
-                                Rate = decimal.Parse(record.Rate),
-                                UnitId = int.TryParse(record.UnitID, out var unitIDResult) ? (unitIDResult) : (null),
-                                SerialNumber = record.SerialNumber,
-                                InstallationDate = DateTime.TryParse(record.InstallationDate, out var installationDateResult) ? (installationDateResult) : (null),
-                                VerificationDate = DateTime.TryParse(record.VerificationDate, out var verificationDateResult) ? (verificationDateResult) : (null),
-                                StampNumber = record.StampNumber,
-                                AntiMagnetStampNumber = record.AntiMagnetStampNumber,
-                                VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
-                                MarkId = int.TryParse(record.MarkID, out var markIDResult) ? (markIDResult) : (null),
-                                Model = record.Model,
-                            };
-                            countersList.Add(counterListEnd);
-                            counterCount++;
-                        }
                         using (DataContext dataContext = new DataContext(options))
                         {
-                            await dataContext.Lists.AddRangeAsync(countersList);
-                            await dataContext.SaveChangesAsync();
+                            foreach (var record in records)
+                            {
+                                if (record.MarkID == null)
+                                {
+                                    var tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
+                                    if (tempMark == null)
+                                    {
+                                        var tempLastMark = new Mark()
+                                        {
+                                            Name = record.Mark
+                                        };
+                                        await dataContext.Marks.AddAsync(tempLastMark);
+                                        await dataContext.SaveChangesAsync();                                  }
+                                }
+                            }
+                        //}
+                        //using (DataContext dataContext = new DataContext(options))
+                        //{
+                            foreach (var record in records)
+                            { 
+                                counters.Add(record);
+                                var tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
+                                record.MarkID = tempMark.Id.ToString();
+                                var counterListEnd = new List()
+                                {
+                                    DateBegin = DateTime.Parse(record.DateBegin),
+                                    SubListId = int.Parse(record.SublistID),
+                                    Number = short.Parse(record.Number),
+                                    Rate = decimal.Parse(record.Rate),
+                                    UnitId = int.TryParse(record.UnitID, out var unitIDResult) ? (unitIDResult) : (null),
+                                    SerialNumber = record.SerialNumber,
+                                    InstallationDate = DateTime.TryParse(record.InstallationDate, out var installationDateResult) ? (installationDateResult) : (null),
+                                    VerificationDate = DateTime.TryParse(record.VerificationDate, out var verificationDateResult) ? (verificationDateResult) : (null),
+                                    StampNumber = record.StampNumber,
+                                    AntiMagnetStampNumber = record.AntiMagnetStampNumber,
+                                    VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
+                                    MarkId = int.TryParse(record.MarkID, out var markIDResult) ? (markIDResult) : (null),
+                                    Model = record.Model,
+                                };
+                                countersList.Add(counterListEnd);
+                                counterCount++;
+                            }
+
+                                await dataContext.Lists.AddRangeAsync(countersList);
+                                await dataContext.SaveChangesAsync();
                         }
                     }
                 }
