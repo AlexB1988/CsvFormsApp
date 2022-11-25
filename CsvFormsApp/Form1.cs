@@ -95,5 +95,10 @@ namespace CsvFormsApp
         {
 
         }
+
+        private void rateLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

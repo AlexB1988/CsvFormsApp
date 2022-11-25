@@ -49,6 +49,8 @@
             this.radioElButton = new System.Windows.Forms.RadioButton();
             this.radioGvsButton = new System.Windows.Forms.RadioButton();
             this.radioXvsButton = new System.Windows.Forms.RadioButton();
+            this.rateBox = new System.Windows.Forms.TextBox();
+            this.rateLabel = new System.Windows.Forms.Label();
             this.groupSulistBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -175,7 +177,7 @@
             // checkBoxCurrentFlow
             // 
             this.checkBoxCurrentFlow.AutoSize = true;
-            this.checkBoxCurrentFlow.Location = new System.Drawing.Point(358, 36);
+            this.checkBoxCurrentFlow.Location = new System.Drawing.Point(358, 12);
             this.checkBoxCurrentFlow.Name = "checkBoxCurrentFlow";
             this.checkBoxCurrentFlow.Size = new System.Drawing.Size(225, 19);
             this.checkBoxCurrentFlow.TabIndex = 15;
@@ -191,9 +193,9 @@
             this.groupSulistBox.Controls.Add(this.radioElButton);
             this.groupSulistBox.Controls.Add(this.radioGvsButton);
             this.groupSulistBox.Controls.Add(this.radioXvsButton);
-            this.groupSulistBox.Location = new System.Drawing.Point(359, 61);
+            this.groupSulistBox.Location = new System.Drawing.Point(358, 38);
             this.groupSulistBox.Name = "groupSulistBox";
-            this.groupSulistBox.Size = new System.Drawing.Size(200, 190);
+            this.groupSulistBox.Size = new System.Drawing.Size(210, 173);
             this.groupSulistBox.TabIndex = 16;
             this.groupSulistBox.TabStop = false;
             this.groupSulistBox.Text = "Услуга";
@@ -264,11 +266,32 @@
             this.radioXvsButton.Text = "Холодная вода";
             this.radioXvsButton.UseVisualStyleBackColor = true;
             // 
+            // rateBox
+            // 
+            this.rateBox.Location = new System.Drawing.Point(358, 228);
+            this.rateBox.Name = "rateBox";
+            this.rateBox.Size = new System.Drawing.Size(120, 23);
+            this.rateBox.TabIndex = 17;
+            this.rateBox.Text = "1.00000";
+            this.rateBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // rateLabel
+            // 
+            this.rateLabel.AutoSize = true;
+            this.rateLabel.Location = new System.Drawing.Point(484, 231);
+            this.rateLabel.Name = "rateLabel";
+            this.rateLabel.Size = new System.Drawing.Size(84, 15);
+            this.rateLabel.TabIndex = 18;
+            this.rateLabel.Text = "Коеффициент";
+            this.rateLabel.Click += new System.EventHandler(this.rateLabel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 333);
+            this.Controls.Add(this.rateLabel);
+            this.Controls.Add(this.rateBox);
             this.Controls.Add(this.groupSulistBox);
             this.Controls.Add(this.checkBoxCurrentFlow);
             this.Controls.Add(this.periodBox);
@@ -320,5 +343,7 @@
         private RadioButton radioElButton;
         private RadioButton radioGvsButton;
         private RadioButton radioXvsButton;
+        private TextBox rateBox;
+        private Label rateLabel;
     }
 }
