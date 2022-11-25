@@ -42,7 +42,14 @@
             this.serverBox = new System.Windows.Forms.TextBox();
             this.periodBox = new System.Windows.Forms.TextBox();
             this.checkBoxCurrentFlow = new System.Windows.Forms.CheckBox();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.groupSulistBox = new System.Windows.Forms.GroupBox();
+            this.radioOtButton = new System.Windows.Forms.RadioButton();
+            this.radioElenButton5 = new System.Windows.Forms.RadioButton();
+            this.radioElledButton = new System.Windows.Forms.RadioButton();
+            this.radioElButton = new System.Windows.Forms.RadioButton();
+            this.radioGvsButton = new System.Windows.Forms.RadioButton();
+            this.radioXvsButton = new System.Windows.Forms.RadioButton();
+            this.groupSulistBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -176,11 +183,93 @@
             this.checkBoxCurrentFlow.UseVisualStyleBackColor = true;
             this.checkBoxCurrentFlow.CheckedChanged += new System.EventHandler(this.checkBoxCurrentFlow_CheckedChanged);
             // 
+            // groupSulistBox
+            // 
+            this.groupSulistBox.Controls.Add(this.radioOtButton);
+            this.groupSulistBox.Controls.Add(this.radioElenButton5);
+            this.groupSulistBox.Controls.Add(this.radioElledButton);
+            this.groupSulistBox.Controls.Add(this.radioElButton);
+            this.groupSulistBox.Controls.Add(this.radioGvsButton);
+            this.groupSulistBox.Controls.Add(this.radioXvsButton);
+            this.groupSulistBox.Location = new System.Drawing.Point(359, 61);
+            this.groupSulistBox.Name = "groupSulistBox";
+            this.groupSulistBox.Size = new System.Drawing.Size(200, 190);
+            this.groupSulistBox.TabIndex = 16;
+            this.groupSulistBox.TabStop = false;
+            this.groupSulistBox.Text = "Услуга";
+            // 
+            // radioOtButton
+            // 
+            this.radioOtButton.AutoSize = true;
+            this.radioOtButton.Location = new System.Drawing.Point(16, 146);
+            this.radioOtButton.Name = "radioOtButton";
+            this.radioOtButton.Size = new System.Drawing.Size(86, 19);
+            this.radioOtButton.TabIndex = 5;
+            this.radioOtButton.TabStop = true;
+            this.radioOtButton.Text = "Отопление";
+            this.radioOtButton.UseVisualStyleBackColor = true;
+            // 
+            // radioElenButton5
+            // 
+            this.radioElenButton5.AutoSize = true;
+            this.radioElenButton5.Location = new System.Drawing.Point(16, 121);
+            this.radioElenButton5.Name = "radioElenButton5";
+            this.radioElenButton5.Size = new System.Drawing.Size(153, 19);
+            this.radioElenButton5.TabIndex = 4;
+            this.radioElenButton5.TabStop = true;
+            this.radioElenButton5.Text = "Електроэнергия (Ночь)";
+            this.radioElenButton5.UseVisualStyleBackColor = true;
+            // 
+            // radioElledButton
+            // 
+            this.radioElledButton.AutoSize = true;
+            this.radioElledButton.Location = new System.Drawing.Point(16, 95);
+            this.radioElledButton.Name = "radioElledButton";
+            this.radioElledButton.Size = new System.Drawing.Size(151, 19);
+            this.radioElledButton.TabIndex = 3;
+            this.radioElledButton.TabStop = true;
+            this.radioElledButton.Text = "Електроэнергия (День)";
+            this.radioElledButton.UseVisualStyleBackColor = true;
+            // 
+            // radioElButton
+            // 
+            this.radioElButton.AutoSize = true;
+            this.radioElButton.Location = new System.Drawing.Point(16, 70);
+            this.radioElButton.Name = "radioElButton";
+            this.radioElButton.Size = new System.Drawing.Size(113, 19);
+            this.radioElButton.TabIndex = 2;
+            this.radioElButton.TabStop = true;
+            this.radioElButton.Text = "Електроэнергия";
+            this.radioElButton.UseVisualStyleBackColor = true;
+            // 
+            // radioGvsButton
+            // 
+            this.radioGvsButton.AutoSize = true;
+            this.radioGvsButton.Location = new System.Drawing.Point(16, 45);
+            this.radioGvsButton.Name = "radioGvsButton";
+            this.radioGvsButton.Size = new System.Drawing.Size(138, 19);
+            this.radioGvsButton.TabIndex = 1;
+            this.radioGvsButton.TabStop = true;
+            this.radioGvsButton.Text = "Холодная вода (ГВС)";
+            this.radioGvsButton.UseVisualStyleBackColor = true;
+            // 
+            // radioXvsButton
+            // 
+            this.radioXvsButton.AutoSize = true;
+            this.radioXvsButton.Location = new System.Drawing.Point(16, 22);
+            this.radioXvsButton.Name = "radioXvsButton";
+            this.radioXvsButton.Size = new System.Drawing.Size(106, 19);
+            this.radioXvsButton.TabIndex = 0;
+            this.radioXvsButton.TabStop = true;
+            this.radioXvsButton.Text = "Холодная вода";
+            this.radioXvsButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 333);
+            this.Controls.Add(this.groupSulistBox);
             this.Controls.Add(this.checkBoxCurrentFlow);
             this.Controls.Add(this.periodBox);
             this.Controls.Add(this.serverBox);
@@ -195,10 +284,13 @@
             this.Controls.Add(this.loadFile);
             this.Controls.Add(this.filePathBox);
             this.Controls.Add(this.broweButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CsvMaker";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.groupSulistBox.ResumeLayout(false);
+            this.groupSulistBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,5 +313,12 @@
         private TextBox serverBox;
         private TextBox periodBox;
         private CheckBox checkBoxCurrentFlow;
+        private GroupBox groupSulistBox;
+        private RadioButton radioOtButton;
+        private RadioButton radioElenButton5;
+        private RadioButton radioElledButton;
+        private RadioButton radioElButton;
+        private RadioButton radioGvsButton;
+        private RadioButton radioXvsButton;
     }
 }
