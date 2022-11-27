@@ -13,7 +13,8 @@ namespace CsvFormsApp.Services
         public CounterListService()
         {
         }
-        public async Task GetObjectList(string path, int period, string connectionString,bool currentFlow)
+        public async Task GetObjectList(string path, int period, string connectionString,bool currentFlow
+                                        ,int sublistID,int unitID,decimal rate)
         {
             try
             {
@@ -42,41 +43,42 @@ namespace CsvFormsApp.Services
                         {
                             foreach (var record in records)
                             {
-                                if (record.MarkID == null)
-                                {
-                                    var tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
-                                    if (tempMark == null)
-                                    {
-                                        var tempLastMark = new Mark()
-                                        {
-                                            Name = record.Mark
-                                        };
-                                        await dataContext.Marks.AddAsync(tempLastMark);
-                                        await dataContext.SaveChangesAsync();                                  }
-                                }
-                            }
-                        //}
-                        //using (DataContext dataContext = new DataContext(options))
-                        //{
-                            foreach (var record in records)
-                            { 
-                                counters.Add(record);
                                 var tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
+                                if (tempMark == null)
+                                {
+                                    var tempLastMark = new Mark()
+                                    {
+                                        Name = record.Mark
+                                    };
+                                    await dataContext.Marks.AddAsync(tempLastMark);
+                                    await dataContext.SaveChangesAsync();
+                                }
+                                tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
                                 record.MarkID = tempMark.Id.ToString();
+                            }
+                        }
+                        using (DataContext dataContext = new DataContext(options))
+                        {
+                            foreach (var record in records)
+                            {
+                                counters.Add(record);
+                                //var tempMark = dataContext.Marks.FirstOrDefaultAsync(u => u.Name == record.Mark);
+                                //record.MarkID = tempMark.Id.ToString();
                                 var counterListEnd = new List()
                                 {
                                     DateBegin = DateTime.Parse(record.DateBegin),
-                                    SubListId = int.Parse(record.SublistID),
+                                    SubListId = sublistID,
                                     Number = short.Parse(record.Number),
-                                    Rate = decimal.Parse(record.Rate),
-                                    UnitId = int.TryParse(record.UnitID, out var unitIDResult) ? (unitIDResult) : (null),
+                                    Rate = rate,
+                                    UnitId = unitID,
                                     SerialNumber = record.SerialNumber,
                                     InstallationDate = DateTime.TryParse(record.InstallationDate, out var installationDateResult) ? (installationDateResult) : (null),
                                     VerificationDate = DateTime.TryParse(record.VerificationDate, out var verificationDateResult) ? (verificationDateResult) : (null),
                                     StampNumber = record.StampNumber,
                                     AntiMagnetStampNumber = record.AntiMagnetStampNumber,
                                     VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
-                                    MarkId = int.TryParse(record.MarkID, out var markIDResult) ? (markIDResult) : (null),
+                                    MarkId=3,
+                                    //MarkId = int.TryParse(record.MarkID, out var markIDResult) ? (markIDResult) : (null),
                                     Model = record.Model,
                                 };
                                 countersList.Add(counterListEnd);
@@ -122,10 +124,10 @@ namespace CsvFormsApp.Services
                                     {
                                         CounterId = int.Parse(counter.CounterID),
                                         PeriodId = period,
-                                        SubListId = int.Parse(counter.SublistID),
+                                        SubListId = sublistID,
                                         PrevDate = DateTime.Parse(counter.PrevDate),
                                         PrevValue = decimal.Parse(counter.PrevValue),
-                                        Rate = decimal.Parse(counter.Rate),
+                                        Rate = rate,
                                         FlowTypeId = 0
                                     };
                                 }
@@ -135,12 +137,12 @@ namespace CsvFormsApp.Services
                                     {
                                         CounterId = int.Parse(counter.CounterID),
                                         PeriodId = period,
-                                        SubListId = int.Parse(counter.SublistID),
+                                        SubListId = sublistID,
                                         PrevDate = DateTime.Parse(counter.PrevDate),
                                         PrevValue = decimal.Parse(counter.PrevValue),
                                         Date = DateTime.Parse(counter.Date),
                                         Value = decimal.Parse(counter.Value),
-                                        Rate = decimal.Parse(counter.Rate),
+                                        Rate = rate,
                                         FlowTypeId = 1
                                     };
                                 }
@@ -175,7 +177,7 @@ namespace CsvFormsApp.Services
                     MessageBoxIcon.Information,
                     MessageBoxDefaultButton.Button1,
                     MessageBoxOptions.DefaultDesktopOnly) ;
-            }
+        }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,
@@ -185,6 +187,6 @@ namespace CsvFormsApp.Services
                     MessageBoxDefaultButton.Button1,
                     MessageBoxOptions.DefaultDesktopOnly);
             }
-        }
+}
     }
 }

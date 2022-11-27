@@ -44,8 +44,8 @@
             this.checkBoxCurrentFlow = new System.Windows.Forms.CheckBox();
             this.groupSulistBox = new System.Windows.Forms.GroupBox();
             this.radioOtButton = new System.Windows.Forms.RadioButton();
-            this.radioElenButton5 = new System.Windows.Forms.RadioButton();
-            this.radioElledButton = new System.Windows.Forms.RadioButton();
+            this.radioElenButton = new System.Windows.Forms.RadioButton();
+            this.radioEledButton = new System.Windows.Forms.RadioButton();
             this.radioElButton = new System.Windows.Forms.RadioButton();
             this.radioGvsButton = new System.Windows.Forms.RadioButton();
             this.radioXvsButton = new System.Windows.Forms.RadioButton();
@@ -65,7 +65,7 @@
             this.broweButton.Name = "broweButton";
             this.broweButton.Size = new System.Drawing.Size(75, 23);
             this.broweButton.TabIndex = 0;
-            this.broweButton.Text = "Browse";
+            this.broweButton.Text = "Выбрать";
             this.broweButton.UseVisualStyleBackColor = true;
             this.broweButton.Click += new System.EventHandler(this.broweButton_Click);
             // 
@@ -188,8 +188,8 @@
             // groupSulistBox
             // 
             this.groupSulistBox.Controls.Add(this.radioOtButton);
-            this.groupSulistBox.Controls.Add(this.radioElenButton5);
-            this.groupSulistBox.Controls.Add(this.radioElledButton);
+            this.groupSulistBox.Controls.Add(this.radioElenButton);
+            this.groupSulistBox.Controls.Add(this.radioEledButton);
             this.groupSulistBox.Controls.Add(this.radioElButton);
             this.groupSulistBox.Controls.Add(this.radioGvsButton);
             this.groupSulistBox.Controls.Add(this.radioXvsButton);
@@ -211,27 +211,27 @@
             this.radioOtButton.Text = "Отопление";
             this.radioOtButton.UseVisualStyleBackColor = true;
             // 
-            // radioElenButton5
+            // radioElenButton
             // 
-            this.radioElenButton5.AutoSize = true;
-            this.radioElenButton5.Location = new System.Drawing.Point(16, 121);
-            this.radioElenButton5.Name = "radioElenButton5";
-            this.radioElenButton5.Size = new System.Drawing.Size(153, 19);
-            this.radioElenButton5.TabIndex = 4;
-            this.radioElenButton5.TabStop = true;
-            this.radioElenButton5.Text = "Електроэнергия (Ночь)";
-            this.radioElenButton5.UseVisualStyleBackColor = true;
+            this.radioElenButton.AutoSize = true;
+            this.radioElenButton.Location = new System.Drawing.Point(16, 121);
+            this.radioElenButton.Name = "radioElenButton";
+            this.radioElenButton.Size = new System.Drawing.Size(153, 19);
+            this.radioElenButton.TabIndex = 4;
+            this.radioElenButton.TabStop = true;
+            this.radioElenButton.Text = "Електроэнергия (Ночь)";
+            this.radioElenButton.UseVisualStyleBackColor = true;
             // 
-            // radioElledButton
+            // radioEledButton
             // 
-            this.radioElledButton.AutoSize = true;
-            this.radioElledButton.Location = new System.Drawing.Point(16, 95);
-            this.radioElledButton.Name = "radioElledButton";
-            this.radioElledButton.Size = new System.Drawing.Size(151, 19);
-            this.radioElledButton.TabIndex = 3;
-            this.radioElledButton.TabStop = true;
-            this.radioElledButton.Text = "Електроэнергия (День)";
-            this.radioElledButton.UseVisualStyleBackColor = true;
+            this.radioEledButton.AutoSize = true;
+            this.radioEledButton.Location = new System.Drawing.Point(16, 95);
+            this.radioEledButton.Name = "radioEledButton";
+            this.radioEledButton.Size = new System.Drawing.Size(151, 19);
+            this.radioEledButton.TabIndex = 3;
+            this.radioEledButton.TabStop = true;
+            this.radioEledButton.Text = "Електроэнергия (День)";
+            this.radioEledButton.UseVisualStyleBackColor = true;
             // 
             // radioElButton
             // 
@@ -274,6 +274,7 @@
             this.rateBox.TabIndex = 17;
             this.rateBox.Text = "1.00000";
             this.rateBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.rateBox.TextChanged += new System.EventHandler(this.rateBox_TextChanged);
             // 
             // rateLabel
             // 
@@ -338,8 +339,8 @@
         private CheckBox checkBoxCurrentFlow;
         private GroupBox groupSulistBox;
         private RadioButton radioOtButton;
-        private RadioButton radioElenButton5;
-        private RadioButton radioElledButton;
+        private RadioButton radioElenButton;
+        private RadioButton radioEledButton;
         private RadioButton radioElButton;
         private RadioButton radioGvsButton;
         private RadioButton radioXvsButton;
