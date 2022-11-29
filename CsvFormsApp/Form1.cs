@@ -35,10 +35,10 @@ namespace CsvFormsApp
         {
             Form2 form2 = new Form2();
             form2.Show();
-            //try
-            //{
-                int sublistID=0;
-                int unitID=0;
+            try
+            {
+                int sublistID = 0;
+                int unitID = 0;
                 if (radioXvsButton.Checked)
                 {
                     sublistID = 22;
@@ -75,10 +75,10 @@ namespace CsvFormsApp
                     unitID = 2;
 
                 }
-                            if (rateBox.Text.Contains("."))
-            {
-                rateBox.Text = rateBox.Text.Replace(".", ",");
-            }
+                if (rateBox.Text.Contains("."))
+                {
+                    rateBox.Text = rateBox.Text.Replace(".", ",");
+                }
                 CounterListService _objectList = new CounterListService();
                 decimal rate = decimal.Parse(rateBox.Text);
                 string path = filePathBox.Text;
@@ -90,19 +90,21 @@ namespace CsvFormsApp
                 bool currentFlow = checkBoxCurrentFlow.Checked;
                 string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                             $";TrustServerCertificate=true;";
-            _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
-            form2.Hide();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message,
-            //        ex.GetType().Name,
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Error,
-            //        MessageBoxDefaultButton.Button1,
-            //        MessageBoxOptions.DefaultDesktopOnly);
-            //}
-        }
+
+                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
+
+                form2.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    ex.GetType().Name,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxOptions.DefaultDesktopOnly);
+            }
+}
         private void loginBox_TextChanged(object sender, EventArgs e)
         {
 
