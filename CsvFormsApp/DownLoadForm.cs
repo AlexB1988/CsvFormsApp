@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace CsvFormsApp
 {
-    public partial class Form2 : Form
+    public partial class DownLoadForm : Form
     {
-        public Form2()
+        public DownLoadForm()
         {
             InitializeComponent();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void DownLoadForm_Load(object sender, EventArgs e)
         {
 
         }

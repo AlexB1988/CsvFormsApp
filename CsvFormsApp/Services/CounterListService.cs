@@ -5,6 +5,7 @@ using CsvFormsApp.Domain;
 using System.Text;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace CsvFormsApp.Services
 {
@@ -14,8 +15,9 @@ namespace CsvFormsApp.Services
         {
         }
         public async Task GetObjectList(string path, int period, string connectionString, bool isCurrentValues
-                                        , int sublistID, int unitID, decimal rate)
+                                        , int sublistID, int unitID, decimal rate,CancellationTokenSource tokenSource)
         {
+            CancellationToken token=tokenSource.Token;
             try
             {
                 var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
@@ -53,15 +55,16 @@ namespace CsvFormsApp.Services
                         foreach (var record in records)
                         {
 
-                            index.TryGetValue(record.Mark, out var tempMark);
+                            index.TryGetValue(record.Mark, out var tempLastMark);
 
-                            if (tempMark == null)
+                            if (tempLastMark == null)
                             {
-                                var tempLastMark = new Mark()
+                                tempLastMark = new Mark()
                                 {
                                     Name = record.Mark
                                 };
                             }
+                            //Debug.Write(tempLastMark.Name);
 
                             var counter = new Counter()
                             {
@@ -76,12 +79,15 @@ namespace CsvFormsApp.Services
                                 StampNumber = record.StampNumber,
                                 AntiMagnetStampNumber = record.AntiMagnetStampNumber,
                                 VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
-                                Mark = tempMark,
+                                Mark = tempLastMark,
                                 Model = record.Model,
                             };
-
+                            if (counter is not null)
+                            {
+                                counterCount++;
+                            }
                             await context.Lists.AddAsync(counter);
-
+                            //Debug.Write(counter.DateBegin);
                             var account = context.Owners.FirstOrDefault(u => u.AccountName == record.AccountName);
                             if (account == null)
                             {
@@ -100,7 +106,10 @@ namespace CsvFormsApp.Services
                                 AccountId = account.AccountId,
                                 Counter = counter
                             };
-
+                            if (counterAccount is not null)
+                            {
+                                accountCount++;
+                            }
 
                             await context.AddAsync(counterAccount);
 
@@ -160,49 +169,6 @@ namespace CsvFormsApp.Services
                         await context.SaveChangesAsync();
                     }
                 }
-
-
-
-                ////await dataContext.Lists.AddRangeAsync(countersList);
-                ////await dataContext.SaveChangesAsync();
-                //foreach (var counter in counters)
-                //{
-                //    var list = countersList.FirstOrDefault(u => u.SerialNumber == counter.SerialNumber);
-                //    if (list != null)
-                //    {
-                //        counter.CounterID = list.Id.ToString();
-                //        var account = context.Owners.FirstOrDefault(u => u.AccountName == counter.AccountName);
-                //        if (account == null)
-                //        {
-                //            account = context.Owners.FirstOrDefault(u => u.FlatBookId.ToString() == counter.FlatBookID &&
-                //                                                         u.FlatName == counter.FlatName &&
-                //                                                         u.HouseId.ToString() == counter.HouseID);
-                //        }
-
-
-                //        if (account != null)
-                //        {
-                //            Console.WriteLine(account.AccountName);
-                //            counter.AccountID = account.AccountId.ToString();
-                //            var counterAccount = new CounterAccount()
-                //            {
-                //                AccountId = int.Parse(counter.AccountID),
-                //                CounterId = int.Parse(counter.CounterID)
-                //            };
-
-
-                //            accountCount++;
-                //            await context.Accounts.AddAsync(counterAccount);
-                //            await context.Flows.AddAsync(counterFlow);
-                //            await context.Flows.AddAsync(counterFlowEnd);
-                //        }
-                //    }
-                //}
-                //await context.SaveChangesAsync();
-                //counters.Clear();
-                //countersList.Clear();
-
-
                 MessageBox.Show(
                     $"Успешно загружено {counterCount} ИПУ!\n" +
                     $"Из них закреплено за л/с {accountCount}.",
@@ -211,11 +177,11 @@ namespace CsvFormsApp.Services
                     MessageBoxIcon.Information,
                     MessageBoxDefaultButton.Button1,
                     MessageBoxOptions.DefaultDesktopOnly);
-            
+
             }
             catch (Exception ex)
             {
-
+                tokenSource.Cancel();
                 MessageBox.Show(ex.Message,
                     ex.GetType().Name,
                     MessageBoxButtons.OK,

@@ -1,6 +1,6 @@
 ﻿namespace CsvFormsApp
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -216,10 +216,10 @@
             this.radioElenButton.AutoSize = true;
             this.radioElenButton.Location = new System.Drawing.Point(16, 121);
             this.radioElenButton.Name = "radioElenButton";
-            this.radioElenButton.Size = new System.Drawing.Size(153, 19);
+            this.radioElenButton.Size = new System.Drawing.Size(154, 19);
             this.radioElenButton.TabIndex = 4;
             this.radioElenButton.TabStop = true;
-            this.radioElenButton.Text = "Електроэнергия (Ночь)";
+            this.radioElenButton.Text = "Электроэнергия (Ночь)";
             this.radioElenButton.UseVisualStyleBackColor = true;
             // 
             // radioEledButton
@@ -227,10 +227,10 @@
             this.radioEledButton.AutoSize = true;
             this.radioEledButton.Location = new System.Drawing.Point(16, 95);
             this.radioEledButton.Name = "radioEledButton";
-            this.radioEledButton.Size = new System.Drawing.Size(151, 19);
+            this.radioEledButton.Size = new System.Drawing.Size(152, 19);
             this.radioEledButton.TabIndex = 3;
             this.radioEledButton.TabStop = true;
-            this.radioEledButton.Text = "Електроэнергия (День)";
+            this.radioEledButton.Text = "Электроэнергия (День)";
             this.radioEledButton.UseVisualStyleBackColor = true;
             // 
             // radioElButton
@@ -238,10 +238,10 @@
             this.radioElButton.AutoSize = true;
             this.radioElButton.Location = new System.Drawing.Point(16, 70);
             this.radioElButton.Name = "radioElButton";
-            this.radioElButton.Size = new System.Drawing.Size(113, 19);
+            this.radioElButton.Size = new System.Drawing.Size(114, 19);
             this.radioElButton.TabIndex = 2;
             this.radioElButton.TabStop = true;
-            this.radioElButton.Text = "Електроэнергия";
+            this.radioElButton.Text = "Электроэнергия";
             this.radioElButton.UseVisualStyleBackColor = true;
             // 
             // radioGvsButton
@@ -286,7 +286,7 @@
             this.rateLabel.Text = "Коеффициент";
             this.rateLabel.Click += new System.EventHandler(this.rateLabel_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -309,10 +309,10 @@
             this.Controls.Add(this.filePathBox);
             this.Controls.Add(this.broweButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CsvMaker";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupSulistBox.ResumeLayout(false);
             this.groupSulistBox.PerformLayout();
             this.ResumeLayout(false);

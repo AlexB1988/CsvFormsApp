@@ -8,14 +8,18 @@ using System.Text;
 
 namespace CsvFormsApp
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        static DownLoadForm downLoadForm = new DownLoadForm();
+        static CancellationTokenSource tokenSource = new CancellationTokenSource();
+        static CancellationToken token = tokenSource.Token;
+        Task downloadGifTask = new Task(() => downLoadForm.ShowDialog(),token);
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
@@ -33,8 +37,7 @@ namespace CsvFormsApp
         }
         private void loadFile_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Show();
+            downloadGifTask.Start();   
             try
             {
                 int sublistID = 0;
@@ -91,12 +94,12 @@ namespace CsvFormsApp
                 string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                             $";TrustServerCertificate=true;";
 
-                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
-
-                form2.Hide();
+                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate,tokenSource);
+                tokenSource.Cancel();
             }
             catch (Exception ex)
             {
+                tokenSource.Cancel();
                 MessageBox.Show(ex.Message,
                     ex.GetType().Name,
                     MessageBoxButtons.OK,
