@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace CsvFormsApp
 {
-    public partial class List
+    public partial class Counter
     {
-        public List()
+        public Counter()
         {
-            Accounts = new HashSet<Account>();
+            Accounts = new HashSet<CounterAccount>();
             Flows = new HashSet<Flow>();
             Houses = new HashSet<House>();
             VerificationHistories = new HashSet<VerificationHistory>();
@@ -49,7 +49,7 @@ namespace CsvFormsApp
 
         public virtual Mark? Mark { get; set; }
         public virtual RemoteMeteringInfo? RemoteMeteringInfo { get; set; }
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<CounterAccount> Accounts { get; set; }
         public virtual ICollection<Flow> Flows { get; set; }
         public virtual ICollection<House> Houses { get; set; }
         public virtual ICollection<VerificationHistory> VerificationHistories { get; set; }

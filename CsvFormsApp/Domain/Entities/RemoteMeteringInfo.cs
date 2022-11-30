@@ -7,12 +7,12 @@ namespace CsvFormsApp
     {
         public RemoteMeteringInfo()
         {
-            Lists = new HashSet<List>();
+            Lists = new HashSet<Counter>();
         }
 
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        public virtual ICollection<List> Lists { get; set; }
+        public virtual ICollection<Counter> Lists { get; set; }
     }
 }

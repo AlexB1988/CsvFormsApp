@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace CsvFormsApp
 {
-    public partial class Account
+    public partial class CounterAccount
     {
         public int AccountId { get; set; }
         public int CounterId { get; set; }
 
-        public virtual List Counter { get; set; } = null!;
+        public virtual Counter Counter { get; set; } = null!;
     }
 }

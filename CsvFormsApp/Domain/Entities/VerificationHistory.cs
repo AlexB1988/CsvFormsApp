@@ -11,6 +11,6 @@ namespace CsvFormsApp
         public int SessionId { get; set; }
         public DateTime VerificationDate { get; set; }
 
-        public virtual List Counter { get; set; } = null!;
+        public virtual Counter Counter { get; set; } = null!;
     }
 }

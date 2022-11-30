@@ -8,6 +8,6 @@ namespace CsvFormsApp
         public int HouseId { get; set; }
         public int CounterId { get; set; }
 
-        public virtual List Counter { get; set; } = null!;
+        public virtual Counter Counter { get; set; } = null!;
     }
 }

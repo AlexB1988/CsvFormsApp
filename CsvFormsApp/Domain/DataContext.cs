@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using CsvFormsApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -17,7 +18,7 @@ namespace CsvFormsApp
         {
         }
 
-        public virtual DbSet<Account> Accounts { get; set; } = null!;
+        public virtual DbSet<CounterAccount> Accounts { get; set; } = null!;
         public virtual DbSet<Owner> Owners { get; set; } = null!;
         public virtual DbSet<Authorization> Authorizations { get; set; } = null!;
         public virtual DbSet<ClosedVerificationDate> ClosedVerificationDates { get; set; } = null!;
@@ -27,7 +28,7 @@ namespace CsvFormsApp
         public virtual DbSet<FlowType> FlowTypes { get; set; } = null!;
         public virtual DbSet<Group> Groups { get; set; } = null!;
         public virtual DbSet<House> Houses { get; set; } = null!;
-        public virtual DbSet<List> Lists { get; set; } = null!;
+        public virtual DbSet<Counter> Lists { get; set; } = null!;
         public virtual DbSet<Mark> Marks { get; set; } = null!;
         public virtual DbSet<RemoteMeteringInfo> RemoteMeteringInfos { get; set; } = null!;
         public virtual DbSet<ValueOld> ValueOlds { get; set; } = null!;
@@ -40,7 +41,10 @@ namespace CsvFormsApp
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Account>(entity =>
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<CounterAccount>(entity =>
             {
                 entity.HasKey(e => new { e.AccountId, e.CounterId })
                     .HasName("PK_Account_3");
@@ -254,7 +258,7 @@ namespace CsvFormsApp
                     .HasConstraintName("FK_CounterHouse_List");
             });
 
-            modelBuilder.Entity<List>(entity =>
+            modelBuilder.Entity<Counter>(entity =>
             {
                 entity.ToTable("List", "Counter");
 
