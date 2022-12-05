@@ -14,17 +14,16 @@ namespace CsvFormsApp.Services
         public CounterListService()
         {
         }
-        public async Task GetObjectList(string path, int period, string connectionString, bool isCurrentValues
-                                        , int sublistID, int unitID, decimal rate,CancellationTokenSource tokenSource)
+        public async Task GetObjectList(string path, int period, string connectionString, bool isCurrentValues, 
+                                        int sublistID, int unitID, decimal rate)
         {
-            CancellationToken token=tokenSource.Token;
             try
             {
                 var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
                 var options = optionsBuilder.UseSqlServer(connectionString).Options;
                 int counterCount = 0;
                 int accountCount = 0;
-                List<Counters> counters = new List<Counters>();
+                //List<Counters> counters = new List<Counters>();
                 List<Counter> countersList = new List<Counter>();
                 //List<Flow> countersFlow = new List<Flow>();
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -54,17 +53,16 @@ namespace CsvFormsApp.Services
 
                         foreach (var record in records)
                         {
+                            index.TryGetValue(record.Mark, out var tempMark);
 
-                            index.TryGetValue(record.Mark, out var tempLastMark);
-
-                            if (tempLastMark == null)
+                            if (tempMark == null)
                             {
-                                tempLastMark = new Mark()
+                                tempMark = new Mark()
                                 {
                                     Name = record.Mark
                                 };
+                                index.Add(tempMark.Name,tempMark);
                             }
-                            //Debug.Write(tempLastMark.Name);
 
                             var counter = new Counter()
                             {
@@ -79,9 +77,10 @@ namespace CsvFormsApp.Services
                                 StampNumber = record.StampNumber,
                                 AntiMagnetStampNumber = record.AntiMagnetStampNumber,
                                 VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
-                                Mark = tempLastMark,
+                                Mark = tempMark,
                                 Model = record.Model,
                             };
+
                             if (counter is not null)
                             {
                                 counterCount++;
@@ -106,10 +105,8 @@ namespace CsvFormsApp.Services
                                 AccountId = account.AccountId,
                                 Counter = counter
                             };
-                            if (counterAccount is not null)
-                            {
-                                accountCount++;
-                            }
+                            accountCount++;
+
 
                             await context.AddAsync(counterAccount);
 
@@ -163,7 +160,6 @@ namespace CsvFormsApp.Services
 
                             await context.Flows.AddAsync(counterFlow);
                             await context.Flows.AddAsync(counterFlowEnd);
-
                         }
 
                         await context.SaveChangesAsync();
@@ -181,7 +177,6 @@ namespace CsvFormsApp.Services
             }
             catch (Exception ex)
             {
-                tokenSource.Cancel();
                 MessageBox.Show(ex.Message,
                     ex.GetType().Name,
                     MessageBoxButtons.OK,

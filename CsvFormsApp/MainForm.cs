@@ -11,9 +11,7 @@ namespace CsvFormsApp
     public partial class MainForm : Form
     {
         static DownLoadForm downLoadForm = new DownLoadForm();
-        static CancellationTokenSource tokenSource = new CancellationTokenSource();
-        static CancellationToken token = tokenSource.Token;
-        Task downloadGifTask = new Task(() => downLoadForm.ShowDialog(),token);
+        Task downloadGifTask = new Task(() => downLoadForm.Show());
         public MainForm()
         {
             InitializeComponent();
@@ -37,7 +35,7 @@ namespace CsvFormsApp
         }
         private void loadFile_Click(object sender, EventArgs e)
         {
-            downloadGifTask.Start();   
+           // downloadGifTask.Start();   
             try
             {
                 int sublistID = 0;
@@ -94,12 +92,10 @@ namespace CsvFormsApp
                 string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                             $";TrustServerCertificate=true;";
 
-                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate,tokenSource);
-                tokenSource.Cancel();
+                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
             }
             catch (Exception ex)
             {
-                tokenSource.Cancel();
                 MessageBox.Show(ex.Message,
                     ex.GetType().Name,
                     MessageBoxButtons.OK,
