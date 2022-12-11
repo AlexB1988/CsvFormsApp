@@ -17,7 +17,7 @@ namespace CsvFormsApp
             : base(options)
         {
         }
-
+        public virtual DbSet<Period> PeriodList { get; set; }
         public virtual DbSet<CounterAccount> Accounts { get; set; } = null!;
         public virtual DbSet<Owner> Owners { get; set; } = null!;
         public virtual DbSet<Authorization> Authorizations { get; set; } = null!;

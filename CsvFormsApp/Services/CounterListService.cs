@@ -51,6 +51,8 @@ namespace CsvFormsApp.Services
                             .GroupBy(x => x.Name)
                             .ToDictionary(x => x.Key, x => x.FirstOrDefault());
 
+                        var periodDateEnd = await context.PeriodList.FirstOrDefaultAsync(u => u.Id == period - 1);
+
                         foreach (var record in records)
                         {
                             index.TryGetValue(record.Mark, out var tempMark);
@@ -119,7 +121,7 @@ namespace CsvFormsApp.Services
                                     Counter = counter,
                                     PeriodId = period,
                                     SubListId = sublistID,
-                                    PrevDate = DateTime.Parse(record.PrevDate),
+                                    PrevDate = periodDateEnd.DateEnd,
                                     PrevValue = decimal.Parse(record.PrevValue),
                                     Date = DateTime.Parse(record.Date),
                                     Value = decimal.Parse(record.Value),
@@ -135,7 +137,7 @@ namespace CsvFormsApp.Services
                                     Counter = counter,
                                     PeriodId = period,
                                     SubListId = sublistID,
-                                    PrevDate = DateTime.Parse(record.PrevDate),
+                                    PrevDate = periodDateEnd.DateEnd,
                                     PrevValue = decimal.Parse(record.PrevValue),
                                     Rate = rate,
                                     FlowTypeId = 0
@@ -151,8 +153,8 @@ namespace CsvFormsApp.Services
                                 SubListId = sublistID,
                                 PrevValue = decimal.Parse(record.PrevValue),
                                 Value = decimal.Parse(record.PrevValue),
-                                PrevDate = DateTime.Parse(record.PrevDate),
-                                Date = DateTime.Parse(record.PrevDate),
+                                PrevDate = periodDateEnd.DateEnd,
+                                Date = periodDateEnd.DateEnd,
                                 Rate = rate,
                                 FlowTypeId = 5
                             };

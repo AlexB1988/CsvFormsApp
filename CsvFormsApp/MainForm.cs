@@ -35,7 +35,7 @@ namespace CsvFormsApp
         }
         private void loadFile_Click(object sender, EventArgs e)
         {
-           // downloadGifTask.Start();   
+            downLoadForm.Show();   
             try
             {
                 int sublistID = 0;
@@ -93,6 +93,8 @@ namespace CsvFormsApp
                                             $";TrustServerCertificate=true;";
 
                 _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
+
+                downLoadForm.Hide();
             }
             catch (Exception ex)
             {
