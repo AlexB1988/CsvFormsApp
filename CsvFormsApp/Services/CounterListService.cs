@@ -112,6 +112,17 @@ namespace CsvFormsApp.Services
 
                             await context.AddAsync(counterAccount);
 
+                            if (record.PrevValue.Contains("."))
+                            {
+                                record.PrevValue=record.PrevValue.Replace(".",",");
+                            }
+
+                            if (record.Value.Contains("."))
+                            {
+                                record.Value = record.Value.Replace(".", ",");
+                            }
+
+
                             Flow counterFlow;
                             if (isCurrentValues)
                             {

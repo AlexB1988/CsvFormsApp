@@ -283,7 +283,7 @@
             this.rateLabel.Name = "rateLabel";
             this.rateLabel.Size = new System.Drawing.Size(84, 15);
             this.rateLabel.TabIndex = 18;
-            this.rateLabel.Text = "Коеффициент";
+            this.rateLabel.Text = "Коэффициент";
             this.rateLabel.Click += new System.EventHandler(this.rateLabel_Click);
             // 
             // MainForm
