@@ -78,6 +78,7 @@ namespace CsvFormsApp.Services
                                 VerificationDate = DateTime.TryParse(record.VerificationDate, out var verificationDateResult) ? (verificationDateResult) : (null),
                                 StampNumber = record.StampNumber,
                                 AntiMagnetStampNumber = record.AntiMagnetStampNumber,
+                                FactorySealDate=DateTime.TryParse(record.FactorySealDate, out var factorySealedDateResult)?(factorySealedDateResult):(null),
                                 VerificationInterval = int.TryParse(record.VerificationInterval, out var verificationIntervalResult) ? (verificationIntervalResult) : (null),
                                 Mark = tempMark,
                                 Model = record.Model,
