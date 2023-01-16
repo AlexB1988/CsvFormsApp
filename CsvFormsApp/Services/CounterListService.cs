@@ -51,7 +51,7 @@ namespace CsvFormsApp.Services
                             .GroupBy(x => x.Name)
                             .ToDictionary(x => x.Key, x => x.FirstOrDefault());
 
-                        var periodDateEnd = await context.PeriodList.FirstOrDefaultAsync(u => u.Id == period - 1);
+                        var periodDateEnd = await context.PeriodList.FirstOrDefaultAsync(u => u.Id == period);
 
                         foreach (var record in records)
                         {
@@ -68,7 +68,7 @@ namespace CsvFormsApp.Services
 
                             var counter = new Counter()
                             {
-                                DateBegin = DateTime.Parse(record.DateBegin),
+                                DateBegin = DateTime.TryParse(record.DateBegin, out var dateBeginResult)?(dateBeginResult):(periodDateEnd.DateBegin),
                                 SubListId = sublistID,
                                 Number = short.Parse(record.Number),
                                 Rate = rate,
@@ -134,7 +134,7 @@ namespace CsvFormsApp.Services
                                     Counter = counter,
                                     PeriodId = period,
                                     SubListId = sublistID,
-                                    PrevDate = periodDateEnd.DateEnd,
+                                    PrevDate = periodDateEnd.DateEnd.AddMonths(-1),
                                     PrevValue = decimal.Parse(record.PrevValue),
                                     Date = DateTime.Parse(record.Date),
                                     Value = decimal.Parse(record.Value),
@@ -150,7 +150,7 @@ namespace CsvFormsApp.Services
                                     Counter = counter,
                                     PeriodId = period,
                                     SubListId = sublistID,
-                                    PrevDate = periodDateEnd.DateEnd,
+                                    PrevDate = periodDateEnd.DateEnd.AddMonths(-1),
                                     PrevValue = decimal.Parse(record.PrevValue),
                                     Rate = rate,
                                     FlowTypeId = 0
@@ -166,8 +166,8 @@ namespace CsvFormsApp.Services
                                 SubListId = sublistID,
                                 PrevValue = decimal.Parse(record.PrevValue),
                                 Value = decimal.Parse(record.PrevValue),
-                                PrevDate = periodDateEnd.DateEnd,
-                                Date = periodDateEnd.DateEnd,
+                                PrevDate = periodDateEnd.DateEnd.AddMonths(-1),
+                                Date = periodDateEnd.DateEnd.AddMonths(-1),
                                 Rate = rate,
                                 FlowTypeId = 5
                             };
