@@ -118,7 +118,7 @@ namespace CsvFormsApp.Services
                                 record.PrevValue=record.PrevValue.Replace(".",",");
                             }
 
-                            if (record.Value.Contains("."))
+                            if (record.Value is not null && record.Value.Contains("."))
                             {
                                 record.Value = record.Value.Replace(".", ",");
                             }
