@@ -95,7 +95,8 @@ namespace CsvFormsApp.Services
                             {
                                 account = context.Owners.FirstOrDefault(u => u.FlatBookId.ToString() == record.FlatBookID &&
                                                                              u.FlatName == record.FlatName &&
-                                                                             u.HouseId.ToString() == record.HouseID);
+                                                                             u.HouseId.ToString() == record.HouseID &&
+                                                                             u.IsClosed==1);
                             }
 
                             if (account == null)
