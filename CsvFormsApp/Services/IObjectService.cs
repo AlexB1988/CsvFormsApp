@@ -1,10 +1,7 @@
-﻿
+﻿namespace CsvFormsApp.Services;
 
-namespace CsvFormsApp.Services
+public interface IObjectService
 {
-    public interface IObjectService
-    {
-        Task GetObjectList(string path, int period, string connectionString,
-                            bool currentFlow,int sublistID,int unitID,decimal rate);
-    }
+    Task<string> GetObjectList(string path, int period, string connectionString,
+                        bool currentFlow,int sublistID,int unitID,decimal rate);
 }

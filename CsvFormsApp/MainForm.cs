@@ -33,7 +33,7 @@ namespace CsvFormsApp
         {
             
         }
-        private void loadFile_Click(object sender, EventArgs e)
+        private async void loadFile_Click(object sender, EventArgs e)
         {
             downLoadForm.Show();   
             try
@@ -92,10 +92,15 @@ namespace CsvFormsApp
                 string connectionString = $"Server={server};User={login};Password={psw};Database={dataBase}" +
                                             $";TrustServerCertificate=true;";
 
-                _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
+                var result = await _objectList.GetObjectList(path, period, connectionString, currentFlow, sublistID, unitID, rate);
 
-                downLoadForm.Hide();
-            }
+				MessageBox.Show(result,
+                    "Уведомление",
+	                MessageBoxButtons.OK,
+	                MessageBoxIcon.Information,
+	                MessageBoxDefaultButton.Button1,
+	                MessageBoxOptions.DefaultDesktopOnly);
+			}
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,
@@ -105,6 +110,10 @@ namespace CsvFormsApp
                     MessageBoxDefaultButton.Button1,
                     MessageBoxOptions.DefaultDesktopOnly);
             }
+            finally
+            {
+				downLoadForm.Hide();
+			}
 }
         private void loginBox_TextChanged(object sender, EventArgs e)
         {

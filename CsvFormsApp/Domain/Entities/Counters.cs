@@ -3,7 +3,7 @@
     public class Counters
     {
         public string? AccountName { get; set; }
-        public string? Number { get; set; }
+        public string Number { get; set; } = null!;
         public string? IsIPU { get; set; }
         public string? SublistID { get; set; }
         public string? Rate { get; set; }
