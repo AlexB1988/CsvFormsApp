@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CsvFormsApp.Services;
 
@@ -113,9 +114,14 @@ public class CounterListService : IObjectService
                     }
 
                     if (account == null)
-                    {
                         continue;
-                    }
+
+                    if (context.Lists.Any(x =>
+                        x.Accounts.Any(y => y.AccountId == account.AccountId)
+                        && (x.Active ?? false)
+                        && x.SubListId == counter.SubListId
+                        && x.Number == counter.Number))
+                        continue;
 
                     var counterAccount = new CounterAccount()
                     {
